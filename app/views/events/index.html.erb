@@ -1,0 +1,4 @@
+<% @events.each do |event| %>
+  <p><%= event.description %></p>
+  <p>Created by <%= event.creator.name %></p>
+<% end %>

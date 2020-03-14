@@ -1,0 +1,14 @@
+<h1><%= @user.name %></h1>
+<%= render 'events/event_form' if session[:name] == @user.name %>
+<h2>Events:</h2>
+<% @events.each do |e| %>
+  <p><%= e.description %></p>
+<% end %>
+<h2>Attending:</h2>
+<% @user.attended_events.each do |event| %>
+  <p><%= event.description%></p>
+  <p>Hosted by <%= event.creator.name %></p>
+<% end %>
+<% if session[:name] == @user.name %>
+  <%= link_to 'delete user', @user, method: :delete %>
+<% end %>
