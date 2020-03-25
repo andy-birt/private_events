@@ -1,0 +1,9 @@
+<% @user.invites.each do |invite| %>
+  <% unless invite.accepted %>
+    <p><i><%= invite.event.creator.name %></i> invited you to attend <b><%= invite.event.name %></b></p>
+    <p>Would you like to attend?</p>
+    <%= form_for :invite, url: invite_path(invite), method: :put do |f| %>
+      <%= f.submit "Attending" %>
+    <% end %>
+  <% end %>
+<% end %>

@@ -1,0 +1,13 @@
+<header>
+  <ul>
+    <% if session[:name] %>
+      <li><%= link_to 'home', root_path %></li>
+
+      <li><%= link_to 'profile', user_path(@user) %></li>
+      <li><%= link_to 'invites', invites_path %></li>
+      <li><%= link_to 'logout', logout_path, method: :delete %></li>
+    <% else %>
+      <li><%= link_to 'signin', signin_path %> or <%= link_to 'signup', signup_path%></li>
+    <% end %>
+  </ul>
+</header>

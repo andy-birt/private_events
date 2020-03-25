@@ -1,13 +1,30 @@
 <h1><%= @user.name %></h1>
 <%= render 'events/event_form' if session[:name] == @user.name %>
-<h2>Events:</h2>
-<% @events.each do |e| %>
+<h2>Upcoming Events:</h2>
+<% @upcoming_events.each do |e| %>
+  <h2><%= e.name %></h2>
   <p><%= e.description %></p>
-<% end %>
+  <span><%= e.show_date %></span>
+  <%= form_for(@invite) do |f| %>
+    <%= f.hidden_field :event_id, value: e.id %>
+    <%= f.collection_select :user_id, User.where.not(id: @user.id), :id, :name, prompt: "Select User", selected: "" %> 
+    <%= f.submit "Send Invite" %>   
+  <% end %>
+<% end if @upcoming_events.any?%>
+<h2>Previous Events:</h2>
+<% @previous_events.each do |e| %>
+  <h2><%= e.name %></h2>
+  <p><%= e.description %></p>
+  <span><%= e.show_date %></span>
+<% end if @previous_events.any? %>
 <h2>Attending:</h2>
 <% @user.attended_events.each do |event| %>
-  <p><%= event.description%></p>
-  <p>Hosted by <%= event.creator.name %></p>
+  <% event.invites.each do |invite| %>
+    <% if invite.accepted %>
+      <p><%= event.description%></p>
+      <p>Hosted by <%= event.creator.name %></p>
+    <% end %>
+  <% end %>
 <% end %>
 <% if session[:name] == @user.name %>
   <%= link_to 'delete user', @user, method: :delete %>

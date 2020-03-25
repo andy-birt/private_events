@@ -1,4 +1,16 @@
-<% @events.each do |event| %>
+<h1>Upcoming Events</h1>
+<% @upcoming_events.each do |event| %>
+  <hr>
+  <h3><%= event.name %></h3>
   <p><%= event.description %></p>
+  <p>Starting <%= event.show_date %></p>
+  <p>Created by <%= event.creator.name %></p>
+<% end %>
+<h1>Previous Events</h1>
+<% @previous_events.each do |event| %>
+  <hr>
+  <h3><%= event.name %></h3>
+  <p><%= event.description %></p>
+  <p>Started <%= event.show_date %></p>
   <p>Created by <%= event.creator.name %></p>
 <% end %>

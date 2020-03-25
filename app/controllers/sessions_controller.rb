@@ -17,6 +17,8 @@ class SessionsController < ApplicationController
 
   def destroy
     params[:session] = nil
+    session[:name] = nil
+    redirect_to root_url
   end
 
 end

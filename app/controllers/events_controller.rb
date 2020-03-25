@@ -1,12 +1,13 @@
 class EventsController < ApplicationController
 
   def index
-    @events = Event.all
+    @user = User.find_by(name: session[:name])
+    @upcoming_events = Event.upcoming
+    @previous_events = Event.past
   end
 
   def create
     @user = User.find_by(name: session[:name])
-    puts @user
     @event = @user.events.build(event_params)
     if @event.save
       flash[:success] = "Event created!"
@@ -18,13 +19,14 @@ class EventsController < ApplicationController
   end
 
   def show
+    @user = User.find_by(name: session[:name])
     @event = Event.find_by(id: params[:id])
   end
 
   private
 
     def event_params
-      params.require(:event).permit(:description)
+      params.require(:event).permit(:name, :description, :date)
     end
 
 end
